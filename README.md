@@ -8,5 +8,5 @@ Before you can connect to LoRaWAN you need to create a ThingType and a Thing in 
 
 ## Specify Different Pins
 
-The guide uses **P11** (written G22 on the expansion board) and G3 for wind speed and wind direction respectively.
+The guide uses **P11** (written G22 on the expansion board) and **G3** for wind speed and wind direction respectively.
 You can change these to your own by modifying `PIN_SPEED` and `PIN_DIR` in [lib/davis7911.py:10](https://github.com/TelenorStartIoT/lorawan-weather-station/blob/master/lib/davis7911.py#L10).

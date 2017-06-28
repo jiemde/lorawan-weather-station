@@ -9,7 +9,7 @@ def setup():
   global n, sensor_davis, sensor_bme280, sleep_time
 
   # Initial sleep time
-  sleep_time = 5
+  sleep_time = 30
 
   # Connect to LoRaWAN
   n = LORA()

@@ -6,19 +6,20 @@ from machine import I2C
 from bme280 import BME280
 from time import sleep
 
+## Setupfunction for LoRaWAN and Devices
 def setup():
   global n, sensor_davis, sensor_bme280, sleep_time
 
   # Initial sleep time
   sleep_time = 30
 
-  # Connect to LoRaWAN
+  # Initialize LoRaWAN
   n = LORA()
 
   # print the dev_eui to register the device in TTN Console
   print("dev_eui = ", n.getDev_eui())
 
-  ##n.connect(dev_eui, app_eui, app_key)
+  # Connect to LoRaWAN
   n.connect(app_eui, app_key)
 
   # Connect Sensors
@@ -36,7 +37,6 @@ if __name__ == "__main__":
   setup()
 
   while True:
-    sleep(sleep_time)
 
     data = ""
 
@@ -49,9 +49,12 @@ if __name__ == "__main__":
       s = sensor_davis.get_windspeed()
       d = sensor_davis.get_dir()
 
-      data = "%s %s %s %.1f %s" % (t, p, h, s, d)
+      data = "%s %s %s %.1f %s" % (t, h, p, s, d)
+      print (data)
     except Exception as e:
       print("Measure error: ", e)
 
     # Send packet
-    response = n.send(data)
+    #response = n.send(data)
+
+    sleep(sleep_time)

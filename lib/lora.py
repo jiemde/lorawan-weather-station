@@ -1,6 +1,7 @@
 import socket
 from binascii import unhexlify
 from binascii import hexlify
+from time import sleep
 from network import LoRa
 from led import LED
 
@@ -43,6 +44,10 @@ class LORA(object):
       LED.blink(1, 2.5, 0xff0000)
       print("Trying to join: " ,  count)
       count = count + 1
+      sleep(2.5)
+
+    print ("Joined! ",  count)
+    print("Create LoRaWAN socket")
 
     # Create a LoRa socket
     LED.blink(2, 0.1)
@@ -54,13 +59,7 @@ class LORA(object):
     # Make the socket non-blocking
     self.s.setblocking(False)
 
-    print ("Joined! ",  count)
-    print("Create LoRaWAN socket")
 
-    # Create a raw LoRa socket
-    self.s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
-    s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
-    s.setblocking(True)
 
   def send(self, data):
     """

@@ -1,6 +1,5 @@
 import socket
-from binascii import unhexlify
-from binascii import hexlify
+from binascii import unhexlify, hexlify
 from time import sleep
 from network import LoRa
 from led import LED

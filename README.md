@@ -1,6 +1,6 @@
 # LoRaWAN Weather Station
 
-> Project code for the LoRaWAN Weather Station guide
+> fork of a TelenorStartIoT project, adapted to work on TheThingsNetwork
 
 ## Changing OTAA Keys
 

@@ -1,4 +1,5 @@
-from config import dev_eui, app_eui, app_key
+#from config import dev_eui, app_eui, app_key
+from config import app_eui, app_key
 from lora import LORA
 from davis7911 import DAVIS7911
 from machine import I2C
@@ -13,7 +14,12 @@ def setup():
 
   # Connect to LoRaWAN
   n = LORA()
-  n.connect(dev_eui, app_eui, app_key)
+
+  # print the dev_eui to register the device in TTN Console
+  print("dev_eui = ", n.getDev_eui())
+
+  ##n.connect(dev_eui, app_eui, app_key)
+  n.connect(app_eui, app_key)
 
   # Connect Sensors
   try:

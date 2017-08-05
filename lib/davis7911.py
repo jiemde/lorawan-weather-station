@@ -5,8 +5,8 @@ class DAVIS7911(object):
   'Davis 7911 sensor library for Pycom LoPy'
 
   # Constants
-  ADC_MAX = 4000
-  ADC_MIN = 150
+  ADC_MAX = 4095
+  ADC_MIN = 0
   PIN_SPEED = 'P11'
   PIN_DIR = 'G3'
 
@@ -42,7 +42,7 @@ class DAVIS7911(object):
   def dir_to_deg(self, dir):
     #pc2 = (dir - self.ADC_MIN) / ((self.ADC_MAX - self.ADC_MIN) / 360)
     pc = (dir - self.ADC_MIN) / (self.ADC_MAX - self.ADC_MIN)
-    return pc * 360
+    return int(round(pc * 360))
 
   def dir_to_dir(self, dir):
     if dir < 333:
@@ -81,4 +81,5 @@ class DAVIS7911(object):
       dir = self.pin_dir.value()
     except Exception as e:
       dir = 0
-    return self.dir_to_dir(dir)
+    return self.dir_to_deg(dir)
+    #return dir

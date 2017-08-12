@@ -3,6 +3,7 @@ from binascii import unhexlify, hexlify
 from time import sleep
 from network import LoRa
 from led import LED
+from struct import unpack
 
 class LORA(object):
   'Wrapper class for LoRa'
@@ -16,13 +17,13 @@ class LORA(object):
       return hexlify(self.lora.mac()).upper().decode('utf-8')
 
   #def connect(self, dev_eui, app_eui, app_key):
-  def connect(self, app_eui, app_key):
+  def connect(self, dev_eui, app_eui, app_key):
     """
     Connect device to LoRa.
     Set the socket and lora instances.
     """
 
-    #dev_eui = unhexlify(dev_eui)
+    dev_eui = unhexlify(dev_eui)
     app_eui = unhexlify(app_eui)
     app_key = unhexlify(app_key)
 
@@ -35,7 +36,18 @@ class LORA(object):
 
     # Join a network using OTAA (Over the Air Activation)
     #self.lora.join(activation = LoRa.OTAA, auth = (dev_eui, app_eui, app_key), timeout = 0) //original login for TelenorStartIoT
-    self.lora.join(activation = LoRa.OTAA, auth = (app_eui, app_key), timeout = 0) #login for TheThingsNetwork see here: https://www.thethingsnetwork.org/forum/t/lopy-otaa-example/4471
+    #self.lora.join(activation = LoRa.OTAA, auth = (app_eui, app_key), timeout = 0) #login for TheThingsNetwork see here: https://www.thethingsnetwork.org/forum/t/lopy-otaa-example/4471
+
+# TEMP setup for shitty single channel gateway
+
+    # Join a network using ABP
+    # create an ABP authentication params
+    dev_addr = unpack(">l", dev_eui)[0]
+    nwk_swkey = app_eui
+    app_swkey = app_key
+    self.lora.join(activation = LoRa.ABP, auth=(dev_addr, nwk_swkey, app_swkey), timeout=0)
+
+# END TEMP setup
 
     # Wait until the module has joined the network
     count = 0
@@ -47,6 +59,8 @@ class LORA(object):
 
     print ("Joined! ",  count)
     print("Create LoRaWAN socket")
+
+
 
     # Create a LoRa socket
     LED.blink(2, 0.1)

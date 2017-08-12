@@ -1,5 +1,4 @@
-#from config import dev_eui, app_eui, app_key
-from config import app_eui, app_key
+from config import dev_eui, app_eui, app_key, dev_addr, nwk_swkey, app_swkey
 from lora import LORA
 from davis7911 import DAVIS7911
 from machine import I2C
@@ -11,16 +10,19 @@ def setup():
   global n, sensor_davis, sensor_bme280, sleep_time
 
   # Initial sleep time
-  sleep_time = 30
+  sleep_time = 10
 
   # Initialize LoRaWAN
-  n = LORA()
+  n = LORA()    
 
   # print the dev_eui to register the device in TTN Console
   print("dev_eui = ", n.getDev_eui())
 
-  # Connect to LoRaWAN
-  n.connect(app_eui, app_key)
+  # Connect to LoRaWAN with OTAA
+  #n.connect(dev_eui, app_eui, app_key)
+
+  # Connect to LoRaWAN with ABP
+  n.connect(dev_addr, nwk_swkey, app_swkey)
 
   # Connect Sensors
   try:
@@ -49,12 +51,12 @@ if __name__ == "__main__":
       s = sensor_davis.get_windspeed()
       d = sensor_davis.get_dir()
 
-      data = "%s %s %s %.1f %s" % (t, h, p, s, d)
-      print (data)
+      data = "%.1f %.1f %.1f %.1f %s" % (t, h, p, s, d)
+
     except Exception as e:
       print("Measure error: ", e)
 
     # Send packet
-    #response = n.send(data)
+    response = n.send(data)
 
     sleep(sleep_time)

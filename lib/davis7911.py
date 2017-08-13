@@ -8,7 +8,8 @@ class DAVIS7911(object):
   ADC_MAX = 4095
   ADC_MIN = 0
   PIN_SPEED = 'P11'
-  PIN_DIR = 'G3'
+  #PIN_DIR = 'G3'
+  PIN_DIR = 'P15'
 
   rotations = 0
   timeout = None

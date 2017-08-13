@@ -21,19 +21,19 @@ The BME280 sensor will measure temperature, humidity and pressure while the Davi
 
 For the BME280 the I2C bus is used. Connections are:
 
-BM280 (Adafruit version) - Pycom expansion board pin (LoPy pin labels)
+BM280 (Adafruit version) -> Pycom expansion board pin (LoPy pin labels)
 
  - VIN to 3V3
  - GND to GND
  - SCK to G17 (SCL, GPIO12)
  - SDI to G16 (SDA, GPIO13)
 
-Davis anemometer
+Davis anemometer -> Pycom expansion board pin (LoPy pin labels)
 
  - PWR (red wire) to 3V3
  - GND (black wire) to GND
  - SPD (yellow wire) to G22 (P11, GPIO22)
- - DIR (green wire) to G3 (P16, ADC3)
+ - DIR (green wire) to G0 (P15, ADC1_2)
 
 ### Specify Different Pins
 

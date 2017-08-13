@@ -3,17 +3,18 @@ from lora import LORA
 from davis7911 import DAVIS7911
 from machine import I2C
 from bme280 import BME280
+from lopy import LoPy
 from time import sleep
 
 ## Setupfunction for LoRaWAN and Devices
 def setup():
-  global n, sensor_davis, sensor_bme280, sleep_time
+  global n, sensor_davis, sensor_bme280, sensor_lopy, sleep_time
 
   # Initial sleep time
   sleep_time = 10
 
   # Initialize LoRaWAN
-  n = LORA()    
+  n = LORA()
 
   # print the dev_eui to register the device in TTN Console
   print("dev_eui = ", n.getDev_eui())
@@ -29,6 +30,7 @@ def setup():
     i2c = I2C(0)
     sensor_bme280 = BME280(i2c = i2c)
     sensor_davis = DAVIS7911()
+    sensor_lopy = LoPy()
   except Exception as e:
     print("Error: ", e)
   print("Setup... done")
@@ -50,8 +52,9 @@ if __name__ == "__main__":
       h = bme280_data[2] / 1024
       s = sensor_davis.get_windspeed()
       d = sensor_davis.get_dir()
+      b = sensor_lopy.get_batt()
 
-      data = "%.1f %.1f %.1f %.1f %s" % (t, h, p, s, d)
+      data = "%.1f %.1f %.1f %.1f %s %.3f" % (t, h, p, s, d, b)
 
     except Exception as e:
       print("Measure error: ", e)
